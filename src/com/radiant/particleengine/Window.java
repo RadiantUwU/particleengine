@@ -6,6 +6,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Window extends JFrame {
+    private Window inst = null;
+    public Window getInstance() {
+        if (inst == null) {
+            inst = new Window();
+        }
+        return inst;
+    }
+    public void delete() {
+        inst = null;
+    }
 
     public void addObject(Drawable drawable) {
         ((Panel) getContentPane()).drawables.add(drawable);
@@ -38,8 +48,9 @@ public class Window extends JFrame {
         }
     }
 
-    public Window() {
+    private Window() {
         super();
+        setTitle("Particle Engine");
         setContentPane(new Panel());
     }
 }
