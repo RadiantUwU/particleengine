@@ -6,14 +6,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Window extends JFrame {
-    private Window inst = null;
-    public Window getInstance() {
+    private static Window inst = null;
+    static public double[] rel = new double[2];
+    static public double[] scale = new double[2];
+    public static Window getInstance() {
         if (inst == null) {
             inst = new Window();
         }
         return inst;
     }
-    public void delete() {
+    public static void delete() {
+        inst.removeAll();
+        inst.dispose();
         inst = null;
     }
 
@@ -34,16 +38,13 @@ public class Window extends JFrame {
     }
 
     static protected class Panel extends JPanel {
-        private final Set<Drawable> drawables;
-
-        public Panel() {
-            super();
-            drawables = new HashSet<>();
-        }
+        private final Set<Drawable> drawables = new HashSet<>();
 
         public void paintComponent(Graphics g) {
-            for (Drawable i : drawables)
-                i.DrawObject(g);
+            for (Drawable i : drawables){
+                Dimension d = getSize();
+                i.DrawObject(g,rel,scale,new double[]{d.width,d.height});
+            }
 
         }
     }
